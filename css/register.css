@@ -1,0 +1,69 @@
+/* Estilos generales del body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Color de fondo general */
+    margin: 0;
+    padding: 0;
+}
+
+/* Contenedor del formulario */
+.form-container {
+    width: 300px; /* Ancho del contenedor */
+    background-color: #ffffff; /* Color de fondo del formulario */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin: 50px auto; /* Centrar horizontalmente */
+    padding: 20px; /* Espaciado interno */
+}
+
+/* Título del formulario */
+h2 {
+    text-align: center; /* Centrar texto */
+    color: #333; /* Color del texto */
+}
+
+/* Estilo de los campos de entrada */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    margin: 10px 0; /* Margen vertical */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 5px; /* Bordes redondeados */
+    box-sizing: border-box; /* Incluir padding y borde en el ancho total */
+}
+
+/* Estilo del botón de registro */
+button {
+    background-color: #007BFF; /* Color de fondo azul */
+    color: white; /* Color del texto */
+    border: none; /* Sin borde */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambiar cursor al pasar por encima */
+    width: 100%; /* Ancho completo */
+    transition: background-color 0.3s; /* Transición de color */
+}
+
+/* Efecto al pasar el cursor sobre el botón */
+button:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el cursor */
+}
+
+/* Estilo del enlace a inicio de sesión */
+p {
+    text-align: center; /* Centrar texto */
+    margin-top: 10px; /* Margen superior */
+}
+
+/* Estilo del enlace */
+a {
+    color: #007BFF; /* Color azul */
+    text-decoration: none; /* Sin subrayado */
+}
+
+a:hover {
+    text-decoration: underline; /* Subrayar al pasar el cursor */
+}
