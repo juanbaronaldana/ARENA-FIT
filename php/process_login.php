@@ -1,29 +1,29 @@
 <?php
 // process_login.php
-include 'db.php'; // Incluir archivo de conexión a la base de datos
+session_start();
+include 'db.php'; // Conexión a la base de datos
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $contrasena = $_POST['contrasena'];
 
-    // Consultar usuario
-    $sql = "SELECT * FROM usuarios WHERE email='$email'";
+    $sql = "SELECT id, nombre, contrasena FROM usuarios WHERE email = '$email'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        if (password_verify($contrasena, $row['contrasena'])) {
-            // Iniciar sesión
-            session_start();
-            $_SESSION['usuario'] = $row['nombre'];
-            header("Location: ../html/index.html"); // Redirigir a la página principal
+        $user = $result->fetch_assoc();
+        if (password_verify($contrasena, $user['contrasena'])) {
+            // Almacena el nombre del usuario en la sesión
+            $_SESSION['user_name'] = $user['nombre'];
+            $_SESSION['user_id'] = $user['id'];
+            header("Location: ../index.php"); // Redirige al index
+            exit();
         } else {
             echo "Contraseña incorrecta.";
         }
     } else {
-        echo "No existe un usuario con ese correo.";
+        echo "Usuario no encontrado.";
     }
 }
-
 $conn->close();
 ?>

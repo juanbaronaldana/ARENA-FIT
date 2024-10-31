@@ -1,22 +1,6 @@
 <?php
 // index.php
-include 'php/db.php'; // Incluir la conexión a la base de datos
-
-// Consultar productos
-$sql = "SELECT * FROM productos";
-$result = $conn->query($sql);
-
-// Comprobar si hay productos
-if ($result->num_rows > 0) {
-    $productos = [];
-    while ($producto = $result->fetch_assoc()) {
-        $productos[] = $producto; // Almacena los productos en un array
-    }
-} else {
-    $productos = []; // No hay productos
-}
-
-$conn->close(); // Cerrar conexión
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -24,46 +8,42 @@ $conn->close(); // Cerrar conexión
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda Virtual - Arena Fit</title>
-    <link rel="stylesheet" href="../css/index.css"> <!-- Llamar al CSS -->
+    <title>ARENA-FIT - Tienda de Productos</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
     <header>
+        <h1>ARENA-FIT</h1>
         <nav>
-            <ul>
-                <li><a href="html/login.html">Iniciar Sesión</a></li>
-                <li><a href="html/register.html">Registrarse</a></li>
-            </ul>
+            <?php if (isset($_SESSION['user_name'])): ?>
+                <span>Bienvenido, <?php echo htmlspecialchars($_SESSION['user_name']); ?></span>
+                <a href="php/logout.php">Cerrar sesión</a>
+            <?php else: ?>
+                <a href="html/login.html">Iniciar sesión</a>
+                <a href="html/register.html">Registrarse</a>
+            <?php endif; ?>
         </nav>
-        <h1>Bienvenido a Arena Fit</h1>
     </header>
 
-    <main>
-        <h2>Lista de Productos</h2>
-        <div class="productos">
-            <?php if (!empty($productos)): ?>
-                <?php foreach ($productos as $producto): ?>
-                    <div class="producto">
-                        <img src="images/<?php echo $producto['imagen']; ?>" alt="<?php echo $producto['nombre']; ?>">
-                        <h3><?php echo $producto['nombre']; ?></h3>
-                        <p>Precio: $<?php echo number_format($producto['precio'], 2); ?></p>
-                        <button onclick="agregarAlCarrito(<?php echo $producto['id']; ?>)">Agregar al Carrito</button>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>No hay productos disponibles.</p>
-            <?php endif; ?>
+    <section class="productos">
+        <h2>Productos Disponibles</h2>
+        <div class="productos-container">
+            <?php
+            include 'php/db.php'; // Asegúrate de que esta línea esté correcta
+            $sql = "SELECT * FROM productos";
+            $result = $conn->query($sql);
+
+            while ($producto = $result->fetch_assoc()) {
+                echo "<div class='producto'>";
+                echo "<img src='img/" . htmlspecialchars($producto['imagen']) . "' alt='" . htmlspecialchars($producto['nombre']) . "'>";
+                echo "<h3>" . htmlspecialchars($producto['nombre']) . "</h3>";
+                echo "<p class='precio'>$" . htmlspecialchars($producto['precio']) . "</p>";
+                echo "<button>Agregar al carrito</button>";
+                echo "</div>";
+            }
+            $conn->close();
+            ?>
         </div>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 Arena Fit. Todos los derechos reservados.</p>
-    </footer>
-
-    <script>
-        function agregarAlCarrito(productoId) {
-            alert('Producto con ID ' + productoId + ' agregado al carrito (simulación).');
-        }
-    </script>
+    </section>
 </body>
 </html>
